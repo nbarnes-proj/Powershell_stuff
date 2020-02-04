@@ -1,0 +1,63 @@
+##Shows all services in a table format/sorted
+
+get-service | sort -property -status | ft name, displayname, starttype, dependentservices
+
+##Order Results by ID
+
+Get-Process | Sort-Object id
+
+##Additional piping
+
+get-process | Sort-Object CPU -Descending | select-object -Last 10 
+
+## Count objects
+
+Get-Process | measure-object
+
+## Count object with more specific parameters looking for virtual memory
+
+Get-Process | measure-object vm -Average
+
+## Dump into CSV file
+
+Get-Process | Export-CSV C:\processlist.csv
+
+## Take above CSV file to export to notepad
+
+notepad C:\processlist.csv
+
+## Look for specific information in CSV and overwrite
+
+Get process | Select-Object -property ProcessName, CPU, VM, PM, starttime | Export-CSV C:\processlist.csv
+
+## Look for specific information in CSV and NOT overwrite (-NoClobber)
+
+Get process | Select-Object -property ProcessName, CPU, VM, PM, starttime | Export-CSV C:\processlist.csv -NoClobber
+
+## import CSV into shell command
+
+import-csv C:\proccesslist.csv
+
+## Convert to HTML descending order
+
+Get-Process | Sort-Object CPU -descending | ConvertTo-HTML
+
+## Convert to HTML descending order but send out to a file 
+
+Get-Process | Sort-Object CPU -descending | ConvertTo-HTML | Out-File c:\processes.html
+
+## Get list of running services
+
+get-service | where-object {$_.status -e1 'running' }
+
+## Get list of services with [program] in name (OPTION 1)
+
+get-service | where {$_.name -like "'windows'" }
+
+## Get list of member names
+
+get-service | get-member 
+
+## Get list of services listed as stopped
+
+get-service | where {$_.status -eq 'stopped' -and $_.Displayname -like "*windows*" }
