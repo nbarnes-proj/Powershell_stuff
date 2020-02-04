@@ -61,3 +61,28 @@ get-service | get-member
 ## Get list of services listed as stopped
 
 get-service | where {$_.status -eq 'stopped' -and $_.Displayname -like "*windows*" }
+
+## Unlock an account
+
+Unlock-ADAccount firstname.lastname
+
+## Find a process and format into list
+
+Get-Process [process name] | Format-List *
+
+## Restart a service
+
+Restart-Service -name *spoolsv.exe*
+
+## Find active directory properties
+
+Get-ADUser -Identity user.name -Properties *
+
+## Find locked out accounts based on a username
+
+Get-ADUser <SamAccountName> -Properties LockedOut
+
+## Find locked out accounts
+
+Search-ADAccount -LockedOut
+
